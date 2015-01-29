@@ -1,0 +1,11 @@
+
+[+] General Parameters:
+LETOR 4.0 dataset: No
+Model file:	my_fold1_listnet_100_1_model.txt
+Feature normalization: No
+Test metric:	ERR@10
+Highest relevance label (to compute ERR): 4
+Model:		ListNet
+Reading feature file [MQ2008/Fold1/test.txt]: 0... Reading feature file [MQ2008/Fold1/test.txt]... [Done.]            
+(156 ranked lists, 2874 entries read)
+ERR@10 on test data: 0.0913
