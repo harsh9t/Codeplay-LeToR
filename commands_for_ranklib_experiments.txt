@@ -1,0 +1,91 @@
+LAMBDAMART
+
+java -jar bin/RankLib.jar -train MQ2008/Fold1/train.txt -test MQ2008/Fold1/test.txt -validate MQ2008/Fold1/vali.txt -ranker 6 -metric2t NDCG@10 -metric2T ERR@10 -save mymodel.txt
+
+----------------------------------------------------------------------------------------------------------------------------------------
+ADARANK
+
+java -jar bin/RankLib.jar -train MQ2008/Fold1/train.txt -test MQ2008/Fold1/test.txt -validate MQ2008/Fold1/vali.txt -ranker 3 -metric2t NDCG@10 -metric2T ERR@10 -save my_adar_model.txt
+
+RANKBOOST
+
+java -jar bin/RankLib.jar -train MQ2008/Fold1/train.txt -test MQ2008/Fold1/test.txt -validate MQ2008/Fold1/vali.txt -ranker 2 -metric2t NDCG@10 -metric2T ERR@10 -save my_rankboost_300rnd_fold1_model.txt > experiment1_fold1_rnkbst_300_log.txt
+
+java -jar bin/RankLib.jar -train MQ2008/Fold2/train.txt -test MQ2008/Fold2/test.txt -validate MQ2008/Fold2/vali.txt -ranker 2 -metric2t NDCG@10 -metric2T ERR@10 -save my_rankboost_300rnd_fold2_model.txt >experiment2_fold2_rnkbst_300_log.txt 
+
+LISTNET
+
+java -jar bin/RankLib.jar -train MQ2008/Fold1/train.txt -test MQ2008/Fold1/test.txt -validate MQ2008/Fold1/vali.txt -ranker 7 -metric2t NDCG@10 -metric2T ERR@10 -save my_fold1_listnet_100_1_model.txt > experiment1_fold1_listnet_100_1_log.txt
+
+java -jar bin/RankLib.jar -train MQ2008/Fold2/train.txt -test MQ2008/Fold2/test.txt -validate MQ2008/Fold2/vali.txt -ranker 7 -metric2t NDCG@10 -metric2T ERR@10 -save my_fold2_listnet_100_1_model.txt > experiment2_fold2_listnet_100_1_log.txt
+
+LambdaMart
+java -jar bin/RankLib.jar -train MQ2008/Fold1/train.txt -test MQ2008/Fold1/test.txt -validate MQ2008/Fold1/vali.txt -ranker 6 -metric2t NDCG@10 -metric2T ERR@10 -save mymodel.txt
+
+java -jar bin/RankLib.jar -train MQ2008/Fold2/train.txt -test MQ2008/Fold2/test.txt -validate MQ2008/Fold2/vali.txt -ranker 6 -metric2t NDCG@10 -metric2T ERR@10 -save mymodel_f2.txt
+
+
+
+===================== Evaluating models ============================
+java -jar bin/RankLib.jar -load mymodel.txt -test MQ2008/Fold1/test.txt -metric2T ERR@10
+//This will evaluate the pre-trained model stored in mymodel.txt on the specified test data using ERR@10.
+
+ADARANK
+java -jar bin/RankLib.jar -load my_adar_model.txt -test MQ2008/Fold1/test.txt -metric2T ERR@10
+
+RANKBOOST
+java -jar bin/RankLib.jar -load my_rankboost_300rnd_fold1_model.txt -test MQ2008/Fold1/test.txt -metric2T ERR@10 > test_rankboost_fold1_result.txt 
+
+java -jar bin/RankLib.jar -load my_rankboost_300rnd_fold3_model.txt -test MQ2008/Fold1/test.txt -metric2T ERR@10
+
+
+
+LISTNET
+java -jar bin/RankLib.jar -load my_fold1_listnet_100_1_model.txt -test MQ2008/Fold1/test.txt -metric2T ERR@10
+
+LambdaMart
+java -jar bin/RankLib.jar -load mymodel.txt -test MQ2008/Fold1/test.txt -metric2T ERR@10
+
+
+####################RESULTS########################
+ADARANK
+NDCG@10 on test data: 0.4763
+NDCG@1000 on test data: 0.5022
+MAP on test data: 0.4493
+
+RANKBOOST
+NDCG@10 on test data: 0.4868
+_/NDCG@1000 on test data: 0.5151
+_/ MAP on test data: 0.4674
+	
+	FOLD 2
+	NDCG@10 on test data: 0.4911
+	NDCG@1000 on test data: 0.5176
+	MAP on test data: 0.4698
+
+	FOLD 3
+	NDCG@10 on test data: 0.4851
+	NDCG@1000 on test data: 0.514
+	MAP on test data: 0.4641
+
+LISTNET
+NDCG@10 on test data: 0.4672
+NDCG@1000 on test data: 0.4961
+MAP on test data: 0.4397
+
+
+
+
+
+==================== Comparing different models =====================
+> java -jar bin/RankLib.jar -test MQ2008/Fold1/test.txt -metric2T NDCG@10 -idv output/baseline.ndcg.txt
+> java -jar bin/RankLib.jar -load ca.model.txt -test MQ2008/Fold1/test.txt -metric2T NDCG@10 -idv output/ca.ndcg.txt
+> java -jar bin/RankLib.jar -load lm.model.txt -test MQ2008/Fold1/test.txt -metric2T NDCG@10 -idv output/lm.ndcg.txt
+
+// Each of the output files (specified with -idv) provides the ndcg@10 each system achieves for each of the test queries. These files are stored in the output/ directory. Note that these commands are different from the one used in Section 2.3 above, which only reports the average measure (e.g. ndcg@10) across all queries. These 3 commands, on the other hand, report ndcg@10 on each of the queries, not just the average.
+
+Now to compare them, do this:
+
+> java -cp bin/RankLib.jar ciir.umass.edu.eval.Analyzer -all output/ -base baseline.ndcg.txt > analysis.txt
+
+//The output file analysis.txt is tab separated. Copy and paste it into any spreadsheet program for easy viewing. Everything should be self-explanatory.

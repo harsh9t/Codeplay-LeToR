@@ -1,0 +1,33 @@
+RankLib
+---------------
+0: MART (gradient boosted regression tree)
+ 		1: RankNet
+ 		2: RankBoost
+ 		3: AdaRank
+ 		4: Coordinate Ascent
+ 		6: LambdaMART
+ 		7: ListNet
+ 		8: Random Forests
+
+Letor Baselines results are for:
+-------------------------------
+Supervised
+	linear
+		1. RankSVM-Struct
+		2. ListNet
+		3. AdaRank-NDCG & MAP
+	non-linear
+		1. RankBoost
+Rank aggregation
+	1. BordaCount
+	2. CPS-KendallTau
+	3. CPS-SpearmanFootrule
+	4. CPS-SpearmanRankCorrelation
+
+COMMON GROUND
+-------------------------
+RankBoost [non-linear]
+AdaRank [linear]
+Listnet	[linear]
+
+
