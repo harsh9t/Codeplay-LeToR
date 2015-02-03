@@ -12,3 +12,7 @@ Part II
 
 5. Integrate medical subject headings and other unified modeling language schemas and play around
 6. Experiment on larger data set
+
+
+==DISCLAIMER==
+The complete data is not available in the repository due to priacy statement and confidentiality clause. You can write a mail to the author for obtaining the dataset.
